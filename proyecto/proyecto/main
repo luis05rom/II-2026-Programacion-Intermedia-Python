@@ -1,7 +1,6 @@
 import gradio as gr
-import pandas as pd
-df=pd.read_csv("clientes.csv")
 
+lista_clientes = []
 class cliente:
     def __init__(self, nombre, marca, fecha_entrada, fecha_salida, numero_piesas, grado_daño):
         self.nombre = nombre
@@ -11,14 +10,9 @@ class cliente:
         self.numero_piesas = numero_piesas
         self.grado_daño = grado_daño
 
-    def mostrar_datos(self):
-        print(f"Nombre: {self.nombre}")
-        print(f"Marca: {self.marca}")
-        print(f"Fecha de entrada: {self.fecha_entrada}")
-        print(f"Fecha de salida: {self.fecha_salida}")
-        print(f"Número de piezas: {self.numero_piesas}")
-        print(f"Grado de daño: {self.grado_daño}")
-    
+   def mostrar_datos(self):
+     return f"Nombre: {self.nombre}\nMarca: {self.marca}\nFecha de entrada: {self.fecha_entrada}\nFecha de salida: {self.fecha_salida}\nNúmero de piezas: {self.numero_piesas}\nGrado de daño: {self.grado_daño}"
+        
     def agregar_cliente(nombre, marca, fecha_entrada, fecha_salida, numero_piesas, grado_daño):
         nuevocli = cliente(
             nombre,
@@ -28,25 +22,34 @@ class cliente:
             numero_piesas,
             grado_daño
         )
-        lista_clientes.append(cliente)
-
-       cliente=[cliente("Victor","Hiundai","7-9-2026","30-9-2026",4,"medio")] 
-
+        
+    
+    
+      
 with gr.Blocks() as interfaz:
-    #los botones
+    #texbox
+    
+    nombre = gr.Textbox(label="Nombre del cliente")
+    marca = gr.Textbox(label="Marca del vehículo")
+    fecha_entrada = gr.Textbox(label="Fecha de entrada del vehículo, 1/10/2026")
+    fecha_salida = gr.Textbox(label="Fecha de salida del vehículo")
+    numero_piesas = gr.Textbox(label="Número de piezas a reparar")
+    grado_daño = gr.Dropdow(choices=["Bajo", "Medio", "Alto", "Remplazo"], label="Grado de daño")
+    
+    #botones
     button=gr.Button("Agregar cliente")
+    button.click(fn=agregar_cliente,variant="primary")
+    button.click(fn=agregar_cliente, inputs=[nombre, marca, fecha_entrada, fecha_salida, numero_piesas, grado_daño], outputs=mostrar_datos)
+    button=gr.Button("Mostrar datos del cliente")
+    button.click(fn=mostrar_datos,outputs=mostrar_datos)
+    
+    #texbox 
+    
     nombre = gr.Textbox(label="Nombre del cliente")
     marca = gr.Textbox(label="Marca del vehículo")
     fecha_entrada = gr.Textbox(label="Fecha de entrada del vehículo")
     fecha_salida = gr.Textbox(label="Fecha de salida del vehículo")
     numero_piesas = gr.Textbox(label="Número de piezas a reparar")
-    with gr.Row():
-        Bajo=gr.Texbox(label="Bajo")
-        Medio=gr.Textbox(label="Medio")
-        Alto=gr.Textbox(label="Alto")
-        Remplazo=gr.Textbox(label="Remplazo")
-    
-    button.click(fn=agregar_cliente, inputs=[nombre, marca, fecha_entrada, fecha_salida, numero_piesas, grado_daño], outputs=cliente_nuevo)
-    button=gr.Button("Mostrar datos del cliente")
-    button.click(fn=mostrar_datos,outputs=mostrar_datos)
+    grado_daño = gr.Textbox(label="Grado de daño del vehículo")
+
     interfaz.launch()
