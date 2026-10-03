@@ -35,7 +35,7 @@ with gr.Blocks() as interfaz:
     fecha_entrada = gr.Textbox(label="Fecha de entrada del vehículo")
     fecha_salida = gr.Textbox(label="Fecha de salida del vehículo")
     numero_piezas = gr.Textbox(label="Número de piezas a reparar")
-    grado_daño = gr.Dropdow(choices=["Bajo", "Medio", "Alto", "Remplazo"], label="Grado de daño")
+    grado_daño = gr.Dropdown(choices=["Bajo", "Medio", "Alto", "Remplazo"], label="Grado de daño")
     resultado = gr.Textbox(label="Resultado")
 
     btn_agregar = gr.Button("Agregar cliente")
